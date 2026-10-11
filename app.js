@@ -1,0 +1,11 @@
+const tabs=document.querySelectorAll('#tabs button');const screens=document.querySelectorAll('.screen');
+tabs.forEach(b=>b.onclick=()=>{tabs.forEach(x=>x.classList.remove('active'));b.classList.add('active');screens.forEach(s=>s.classList.toggle('active',s.id===b.dataset.screen));});
+const $=id=>document.getElementById(id);
+$('requestBtn').onclick=()=>{$('patientStatus').classList.remove('hidden');$('patientStatus').innerHTML='🚑 <b>Ambulance request sent.</b> A-102 is the fastest simulated match. ETA: 4 minutes. Switch to the Ambulance screen to continue.';tabs[1].click();};
+$('acceptBtn').onclick=()=>{$('acceptBtn').disabled=true;$('pickupBtn').disabled=false;$('ambState').textContent='EN ROUTE';$('ambState').className='pill red';$('startTrip').disabled=false;};
+$('startTrip').onclick=()=>{let d=2.4,sec=240;$('startTrip').disabled=true;let t=setInterval(()=>{sec-=5;d=Math.max(0,d-.05);$('distance').textContent=d.toFixed(2);$('eta').textContent=Math.max(0,Math.floor(sec/60)).toString().padStart(2,'0')+':'+(Math.max(0,sec%60)).toString().padStart(2,'0');$('policeDistance').textContent=d.toFixed(1)+' km';$('policeEta').textContent=Math.max(1,Math.ceil(sec/60))+' min';$('hospitalEta').textContent=Math.max(1,Math.ceil(sec/60)+3)+' min';$('arrivalEta').textContent=Math.max(1,Math.ceil(sec/60)+3)+' min';if(sec<=0)clearInterval(t)},1000);};
+$('pickupBtn').onclick=()=>{ $('pickupBtn').disabled=true; $('policeLog').textContent='Patient picked up. Emergency route is now active.'; $('hospitalStatus').textContent='En route with patient'; tabs[2].click();};
+$('ackBtn').onclick=()=>{$('policeAlert').style.borderLeftColor='#168044';$('policeAlert').style.background='#eefaf2';$('policeLog').textContent='Alert acknowledged by officer. Monitoring ambulance approach.';};
+$('priorityBtn').onclick=()=>{$('policeLog').textContent='🚦 Junction priority request created for Hanamkonda Junction (SIMULATION).';};
+$('clearBtn').onclick=()=>{$('policeLog').textContent='Route marked clear by officer (SIMULATION).';};
+$('prepareBtn').onclick=()=>{$('hospitalReady').classList.remove('hidden');$('hospitalReady').textContent='✓ Emergency department notified. Preparation status: READY.';$('hospitalStatus').textContent='ER prepared';};

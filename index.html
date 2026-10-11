@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Ambulance Emergency Response</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">🚑 <span>RapidRescue</span></div>
+  <div class="demo">WARANGAL DEMO • LIVE SIMULATION</div>
+</header>
+
+<nav id="tabs">
+  <button class="active" data-screen="patient">👤 Patient</button>
+  <button data-screen="ambulance">🚑 Ambulance</button>
+  <button data-screen="police">👮 Traffic Police</button>
+  <button data-screen="hospital">🏥 Hospital</button>
+</nav>
+
+<main>
+<section id="patient" class="screen active">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">EMERGENCY RESPONSE</p>
+      <h1>Get an ambulance without making a phone call.</h1>
+      <p class="muted">One tap requests the nearest available ambulance. This prototype uses simulated Warangal locations.</p>
+    </div>
+    <div class="emergency-card">
+      <div class="pulse">🚨</div>
+      <button id="requestBtn" class="emergency">REQUEST AMBULANCE</button>
+      <small>Use only for genuine emergencies.</small>
+    </div>
+  </div>
+  <div class="grid three">
+    <div class="card"><span class="icon">📍</span><h3>Auto location</h3><p>Patient location is captured for dispatch.</p></div>
+    <div class="card"><span class="icon">🚑</span><h3>Fast matching</h3><p>Chooses by estimated arrival time, not distance alone.</p></div>
+    <div class="card"><span class="icon">🛡️</span><h3>Live tracking</h3><p>Track the ambulance after acceptance.</p></div>
+  </div>
+  <div id="patientStatus" class="status hidden"></div>
+</section>
+
+<section id="ambulance" class="screen">
+  <div class="section-head"><div><p class="eyebrow">DISPATCH</p><h2>Ambulance console</h2></div><span id="ambState" class="pill green">AVAILABLE</span></div>
+  <div class="grid two">
+    <div class="card">
+      <h3>Incoming emergency</h3>
+      <div class="request-box">
+        <div class="big">🚨</div>
+        <div><b>Patient request #WRG-1024</b><p>Location: Hanamkonda • Priority: High</p><p>Best ETA: <b>4 min</b></p></div>
+      </div>
+      <div class="actions"><button id="acceptBtn" class="primary">Accept request</button><button id="pickupBtn" disabled>Patient picked up</button></div>
+    </div>
+    <div class="card">
+      <h3>Live trip</h3>
+      <div class="route"><span>📍 Patient</span><span>→</span><span>🏥 MGM Hospital</span></div>
+      <div class="metrics"><div><b id="distance">2.4</b><small>km remaining</small></div><div><b id="eta">04:00</b><small>estimated ETA</small></div><div><b id="traffic">HEAVY</b><small>traffic</small></div></div>
+      <button id="startTrip" disabled class="primary full">Start emergency trip</button>
+    </div>
+  </div>
+  <div class="card mapfake">
+    <div class="road r1"></div><div class="road r2"></div><div class="road r3"></div>
+    <div class="marker patient-m">👤</div><div class="marker amb-m">🚑</div><div class="marker hospital-m">🏥</div>
+    <div class="map-label">Simulated Warangal route • live prototype</div>
+  </div>
+</section>
+
+<section id="police" class="screen">
+  <div class="section-head"><div><p class="eyebrow">TRAFFIC CONTROL</p><h2>Traffic police dashboard</h2></div><span class="pill red">● EMERGENCY</span></div>
+  <div id="policeAlert" class="police-alert">
+    <div class="siren">🔊</div>
+    <div><b>AMBULANCE PRIORITY ALERT</b><p>Ambulance A-102 is approaching a heavy-traffic junction.</p></div>
+    <button id="ackBtn" class="primary">Acknowledge</button>
+  </div>
+  <div class="grid three">
+    <div class="card"><span class="icon">🚑</span><h3>A-102</h3><p>Distance <b id="policeDistance">1.8 km</b></p><p>ETA <b id="policeEta">4 min</b></p></div>
+    <div class="card"><span class="icon">🚦</span><h3>Hanamkonda Junction</h3><p>Traffic: <b class="danger">HEAVY</b></p><p>Priority request: <b>PENDING</b></p></div>
+    <div class="card"><span class="icon">📡</span><h3>Emergency channel</h3><p>Connected to dispatch server.</p><p><b>ONLINE</b></p></div>
+  </div>
+  <div class="card">
+    <h3>Officer actions</h3>
+    <div class="actions"><button id="priorityBtn" class="primary">Request junction priority</button><button id="clearBtn">Mark route clear</button></div>
+    <p id="policeLog" class="muted">Waiting for acknowledgement...</p>
+  </div>
+</section>
+
+<section id="hospital" class="screen">
+  <div class="section-head"><div><p class="eyebrow">EMERGENCY DEPARTMENT</p><h2>Hospital dashboard</h2></div><span class="pill green">READY</span></div>
+  <div class="hospital-banner"><div class="big">🚑</div><div><b>Incoming emergency ambulance</b><p>A-102 • High priority • ETA <span id="hospitalEta">7 min</span></p></div><button id="prepareBtn" class="primary">Prepare ER</button></div>
+  <div class="grid three">
+    <div class="card"><h3>Ambulance</h3><p>A-102</p><p>Status: <b id="hospitalStatus">En route</b></p></div>
+    <div class="card"><h3>Patient</h3><p>Emergency case</p><p>Details shared after authorized intake.</p></div>
+    <div class="card"><h3>Arrival</h3><p>ETA: <b id="arrivalEta">7 min</b></p><p>Route: Hanamkonda → MGM Hospital</p></div>
+  </div>
+  <div id="hospitalReady" class="status hidden"></div>
+</section>
+</main>
+
+<footer>Prototype only — simulated data. Real ambulance dispatch, police alerts, traffic-signal priority and medical information require authorized integrations.</footer>
+<script src="app.js"></script>
+</body>
+</html>
